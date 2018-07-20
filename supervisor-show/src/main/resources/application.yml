@@ -1,0 +1,52 @@
+server:
+  port: 8093
+
+spring:
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  boot:
+    admin:
+      client:
+        prefer-ip: true # 解决windows下运行时无法识别主机名的问题
+        url: http://localhost:8082/ # 向服务端注册的地址
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: LEGACYHTML5
+  redis:
+    host: 192.168.99.100
+    #password:
+    port: 6379
+
+auth-server: http://localhost:8088  # sso-server地址
+
+security:
+  oauth2:
+    client:
+      clientId: client
+      clientSecret: secret
+      grant-type: password
+      userAuthorizationUri: ${auth-server}/oauth/authorize #请求认证的地址
+      access-token-uri: ${auth-server}/oauth/token  #请求令牌的地址
+    resource:
+      userInfoUri: ${auth-server}/supervisor/user
+
+# 显示sql
+logging:
+  level:
+    com:
+      shrek:
+        supervisorshow: debug
+
+info:
+  app:
+      name: "@project.artifactId@"
+      encoding: '@project.build.sourceEncoding@'
+      java:
+        source: '@java.version@'
+        target: '@java.version@'

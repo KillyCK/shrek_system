@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shrek.supervisor.dao.SupervisorDao">
+  <resultMap id="BaseResultMap" type="com.shrek.supervisor.entity.Supervisor">
+    <id column="supervisor_id" jdbcType="INTEGER" property="supervisorId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="passwd" jdbcType="VARCHAR" property="passwd" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="insert_by" jdbcType="INTEGER" property="insertBy" />
+    <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+    <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <collection property="roles" ofType="com.shrek.supervisor.entity.Role" >
+      <id column="role_id" jdbcType="INTEGER" property="roleId" />
+      <result column="role_name" jdbcType="VARCHAR" property="name" />
+      <result column="role_value" jdbcType="VARCHAR" property="value" />
+      <result column="role_department_id" jdbcType="INTEGER" property="departmentId" />
+      <result column="role_insert_by" jdbcType="INTEGER" property="insertBy" />
+      <result column="role_update_by" jdbcType="INTEGER" property="updateBy" />
+      <result column="role_insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+      <result column="role_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <collection property="permissions" ofType="com.shrek.supervisor.entity.Permission" >
+        <id column="permission_id" jdbcType="INTEGER" property="permissionId" />
+        <result column="permission_name" jdbcType="VARCHAR" property="name" />
+        <result column="permission_value" jdbcType="VARCHAR" property="value" />
+        <result column="permission_parent" jdbcType="INTEGER" property="parent" />
+        <result column="permission_insert_by" jdbcType="VARCHAR" property="insertBy" />
+        <result column="permission_update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="permission_insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+        <result column="permission_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      </collection>
+    </collection>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    supervisor_id, username, passwd, status, department_id, insert_by, update_by, insert_time, 
+    update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.shrek.supervisor.entity.SupervisorExample" resultMap="BaseResultMap">
+    SELECT
+    <if test="distinct">
+      distinct
+    </if>
+    s.supervisor_id,
+    s.username,
+    s.passwd,
+    s. STATUS,
+    s.department_id,
+    s.insert_by,
+    s.update_by,
+    s.insert_time,
+    s.update_time,
+    r.role_id AS role_id,
+    r. NAME AS role_name,
+    r.VALUE	AS role_value,
+    r.department_id AS role_department_id,
+    r.insert_by AS role_insert_by,
+    r.update_by AS role_update_by,
+    r.insert_time AS role_insert_time,
+    r.update_time AS role_update_time,
+    p.permission_id AS permission_id,
+    p. NAME AS permission_name,
+    p.VALUE AS permission_value,
+    p.parent AS permission_parent,
+    p.insert_by AS permission_insert_by,
+    p.update_by AS permission_update_by,
+    p.insert_time AS permission_insert_time,
+    p.update_time AS permission_update_time
+    FROM
+    supervisor s
+    INNER JOIN supervisor_role sr ON s.supervisor_id = sr.supervisor_id
+    INNER JOIN role r ON r.role_id = sr.role_id
+    INNER JOIN role_permission rp ON rp.role_id = r.role_id
+    INNER JOIN permission p ON p.permission_id = rp.permission_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+        s.supervisor_id,
+        s.username,
+        s.passwd,
+        s. STATUS,
+        s.department_id,
+        s.insert_by,
+        s.update_by,
+        s.insert_time,
+        s.update_time,
+        r.role_id AS role_id,
+        r. NAME AS role_name,
+        r.VALUE	AS role_value,
+        r.department_id AS role_department_id,
+        r.insert_by AS role_insert_by,
+        r.update_by AS role_update_by,
+        r.insert_time AS role_insert_time,
+        r.update_time AS role_update_time,
+        p.permission_id AS permission_id,
+        p. NAME AS permission_name,
+        p.VALUE AS permission_value,
+        p.parent AS permission_parent,
+        p.insert_by AS permission_insert_by,
+        p.update_by AS permission_update_by,
+        p.insert_time AS permission_insert_time,
+        p.update_time AS permission_update_time
+    FROM
+        supervisor s
+    INNER JOIN supervisor_role sr ON s.supervisor_id = sr.supervisor_id
+    INNER JOIN role r ON r.role_id = sr.role_id
+    INNER JOIN role_permission rp ON rp.role_id = r.role_id
+    INNER JOIN permission p ON p.permission_id = rp.permission_id
+    where s.supervisor_id = #{supervisorId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from supervisor
+    where supervisor_id = #{supervisorId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shrek.supervisor.entity.SupervisorExample">
+    delete from supervisor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shrek.supervisor.entity.Supervisor">
+    insert into supervisor (supervisor_id, username, passwd, 
+      status, department_id, insert_by, 
+      update_by, insert_time, update_time
+      )
+    values (#{supervisorId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{insertBy,jdbcType=INTEGER}, 
+      #{updateBy,jdbcType=INTEGER}, #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shrek.supervisor.entity.Supervisor">
+    insert into supervisor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="supervisorId != null">
+        supervisor_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="insertBy != null">
+        insert_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="insertTime != null">
+        insert_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="supervisorId != null">
+        #{supervisorId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="insertBy != null">
+        #{insertBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shrek.supervisor.entity.SupervisorExample" resultType="java.lang.Long">
+    select count(*) from supervisor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update supervisor
+    <set>
+      <if test="record.supervisorId != null">
+        supervisor_id = #{record.supervisorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentId != null">
+        department_id = #{record.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.insertBy != null">
+        insert_by = #{record.insertBy,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="record.insertTime != null">
+        insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update supervisor
+    set supervisor_id = #{record.supervisorId,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      department_id = #{record.departmentId,jdbcType=INTEGER},
+      insert_by = #{record.insertBy,jdbcType=INTEGER},
+      update_by = #{record.updateBy,jdbcType=INTEGER},
+      insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.supervisor.entity.Supervisor">
+    update supervisor
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="insertBy != null">
+        insert_by = #{insertBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="insertTime != null">
+        insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where supervisor_id = #{supervisorId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shrek.supervisor.entity.Supervisor">
+    update supervisor
+    set username = #{username,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      insert_by = #{insertBy,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=INTEGER},
+      insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where supervisor_id = #{supervisorId,jdbcType=INTEGER}
+  </update>
+</mapper>

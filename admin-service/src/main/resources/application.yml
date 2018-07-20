@@ -1,0 +1,53 @@
+server:
+  port: 8082
+
+info:
+  app:
+    name: "@project.artifactId@"
+    encoding: '@project.build.sourceEncoding@'
+    java:
+      source: '@java.version@'
+      target: '@java.version@'
+
+spring:
+  application:
+    name: ShrekAdmin
+  boot:
+    admin:
+      notify:
+        mail:
+          enabled: false
+          to: 13326465230@qq.com
+          from: 13326465230@163.com
+#          ignore-changes: UNKNOWN:UP
+          ignore-changes:
+            -
+              "*:UP" #从任何状态到up状态都不要发邮件通知
+      routes:
+        endpoints: env,metrics,dump,jolokia,Role,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+
+  mail:
+    host: smtp.163.com
+    username: 13326465230@163.com
+    password: zhaocike035
+    properties:
+        mail.smtp.auth : true
+        mail.smtp.timeout : 2000
+        mail.smtp.starttls.enable : true
+        mail.smtp.starttls.required : true
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

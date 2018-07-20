@@ -1,0 +1,61 @@
+server:
+  port: 8088
+
+info:
+  app:
+    name: "@project.artifactId@"
+    encoding: '@project.build.sourceEncoding@'
+    java:
+      source: '@java.version@'
+      target: '@java.version@'
+
+spring:
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  boot:
+    admin:
+      client:
+        prefer-ip: true # 解决windows下运行时无法识别主机名的问题
+        url: http://localhost:8082/ # 向服务端注册的地址
+  thymeleaf:
+    prefix: classpath:oauth2/
+    cache:  false
+  redis:
+    host: 192.168.99.100
+    #password:
+    port: 6379
+
+# 打开feign对hystrix的支持
+feign:
+  hystrix:
+    enabled: true
+
+# 配置hystrix
+hystrix:
+  threadpool:
+    default:
+      coreSize: 10  #线程池核心线程数
+  command:
+    #IService#hello(): 设置某一个接口 default: 设置全部接口
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000 #超时时间
+            #这里将线程策略设置为SEMAPHORE
+            strategy: SEMAPHORE
+      circuitBreaker:
+        requestVolumeThreshold: 3  #当在配置时间窗口内达到此数量后，进行短路。默认20个
+        sleepWindowInMilliseconds: 5  #短路多久以后开始尝试是否恢复，默认5s
+        errorThresholdPercentage: 50%  #出错百分比阈值，当达到此阈值后，开始短路。默认50%
+
+
+logging:
+  level:
+    com:
+      shrek:
+        oauthservice:
+          service: DEBUG

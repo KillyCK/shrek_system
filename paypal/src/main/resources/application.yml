@@ -1,0 +1,26 @@
+server:
+  port: 8092
+
+info:
+  app:
+    name: "@project.artifactId@"
+    encoding: '@project.build.sourceEncoding@'
+    java:
+      source: '@java.version@'
+      target: '@java.version@'
+
+spring:
+#  zipkin: #zipkin追踪
+#    base-url: http://localhost:8766
+  boot:
+    admin:
+      client:
+        prefer-ip: true # 解决windows下运行时无法识别主机名的问题
+        url: http://localhost:8082/   # 向服务端注册的地址
+
+# 显示sql
+logging:
+  level:
+    com:
+      shrek:
+        paypal: debug

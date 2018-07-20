@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shrek.supervisor.dao.SupervisorImageDao">
+  <resultMap id="BaseResultMap" type="com.shrek.supervisor.entity.SupervisorImage">
+    <id column="supervisor_image_id" jdbcType="INTEGER" property="supervisorImageId" />
+    <result column="supervisor_id" jdbcType="INTEGER" property="supervisorId" />
+    <result column="images_type" jdbcType="INTEGER" property="imagesType" />
+    <result column="images_url" jdbcType="VARCHAR" property="imagesUrl" />
+    <result column="display_order" jdbcType="INTEGER" property="displayOrder" />
+    <result column="images_desc" jdbcType="VARCHAR" property="imagesDesc" />
+    <result column="insert_by" jdbcType="VARCHAR" property="insertBy" />
+    <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+    <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    supervisor_image_id, supervisor_id, images_type, images_url, display_order, images_desc, 
+    insert_by, update_by, insert_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.shrek.supervisor.entity.SupervisorImageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from supervisor_image
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from supervisor_image
+    where supervisor_image_id = #{supervisorImageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from supervisor_image
+    where supervisor_image_id = #{supervisorImageId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shrek.supervisor.entity.SupervisorImageExample">
+    delete from supervisor_image
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shrek.supervisor.entity.SupervisorImage">
+    insert into supervisor_image (supervisor_image_id, supervisor_id, 
+      images_type, images_url, display_order, 
+      images_desc, insert_by, update_by, 
+      insert_time, update_time)
+    values (#{supervisorImageId,jdbcType=INTEGER}, #{supervisorId,jdbcType=INTEGER}, 
+      #{imagesType,jdbcType=INTEGER}, #{imagesUrl,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, 
+      #{imagesDesc,jdbcType=VARCHAR}, #{insertBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=INTEGER}, 
+      #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shrek.supervisor.entity.SupervisorImage">
+    insert into supervisor_image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="supervisorImageId != null">
+        supervisor_image_id,
+      </if>
+      <if test="supervisorId != null">
+        supervisor_id,
+      </if>
+      <if test="imagesType != null">
+        images_type,
+      </if>
+      <if test="imagesUrl != null">
+        images_url,
+      </if>
+      <if test="displayOrder != null">
+        display_order,
+      </if>
+      <if test="imagesDesc != null">
+        images_desc,
+      </if>
+      <if test="insertBy != null">
+        insert_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="insertTime != null">
+        insert_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="supervisorImageId != null">
+        #{supervisorImageId,jdbcType=INTEGER},
+      </if>
+      <if test="supervisorId != null">
+        #{supervisorId,jdbcType=INTEGER},
+      </if>
+      <if test="imagesType != null">
+        #{imagesType,jdbcType=INTEGER},
+      </if>
+      <if test="imagesUrl != null">
+        #{imagesUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="imagesDesc != null">
+        #{imagesDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="insertBy != null">
+        #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shrek.supervisor.entity.SupervisorImageExample" resultType="java.lang.Long">
+    select count(*) from supervisor_image
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update supervisor_image
+    <set>
+      <if test="record.supervisorImageId != null">
+        supervisor_image_id = #{record.supervisorImageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.supervisorId != null">
+        supervisor_id = #{record.supervisorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.imagesType != null">
+        images_type = #{record.imagesType,jdbcType=INTEGER},
+      </if>
+      <if test="record.imagesUrl != null">
+        images_url = #{record.imagesUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.displayOrder != null">
+        display_order = #{record.displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.imagesDesc != null">
+        images_desc = #{record.imagesDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insertBy != null">
+        insert_by = #{record.insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="record.insertTime != null">
+        insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update supervisor_image
+    set supervisor_image_id = #{record.supervisorImageId,jdbcType=INTEGER},
+      supervisor_id = #{record.supervisorId,jdbcType=INTEGER},
+      images_type = #{record.imagesType,jdbcType=INTEGER},
+      images_url = #{record.imagesUrl,jdbcType=VARCHAR},
+      display_order = #{record.displayOrder,jdbcType=INTEGER},
+      images_desc = #{record.imagesDesc,jdbcType=VARCHAR},
+      insert_by = #{record.insertBy,jdbcType=VARCHAR},
+      update_by = #{record.updateBy,jdbcType=INTEGER},
+      insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.supervisor.entity.SupervisorImage">
+    update supervisor_image
+    <set>
+      <if test="supervisorId != null">
+        supervisor_id = #{supervisorId,jdbcType=INTEGER},
+      </if>
+      <if test="imagesType != null">
+        images_type = #{imagesType,jdbcType=INTEGER},
+      </if>
+      <if test="imagesUrl != null">
+        images_url = #{imagesUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        display_order = #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="imagesDesc != null">
+        images_desc = #{imagesDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="insertBy != null">
+        insert_by = #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="insertTime != null">
+        insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where supervisor_image_id = #{supervisorImageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shrek.supervisor.entity.SupervisorImage">
+    update supervisor_image
+    set supervisor_id = #{supervisorId,jdbcType=INTEGER},
+      images_type = #{imagesType,jdbcType=INTEGER},
+      images_url = #{imagesUrl,jdbcType=VARCHAR},
+      display_order = #{displayOrder,jdbcType=INTEGER},
+      images_desc = #{imagesDesc,jdbcType=VARCHAR},
+      insert_by = #{insertBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=INTEGER},
+      insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where supervisor_image_id = #{supervisorImageId,jdbcType=INTEGER}
+  </update>
+</mapper>

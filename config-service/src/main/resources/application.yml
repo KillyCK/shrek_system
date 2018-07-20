@@ -1,0 +1,41 @@
+server:
+  port: 8083
+
+info:
+  app:
+    name: "@project.artifactId@"
+    encoding: '@project.build.sourceEncoding@'
+    java:
+      source: '@java.version@'
+      target: '@java.version@'
+
+eureka:
+  instance:
+    appname: ShrekConfig
+    preferIpAddress: true
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
+
+spring:
+  profiles:
+    active: native
+  application:
+    name: ShrekConfig
+  boot:
+    admin:
+      client:
+        prefer-ip: true # 解决windows下运行时无法识别主机名的问题
+        url: http://localhost:8082/ # 向服务端注册的地址
+  rabbitmq:
+    host: 192.168.99.100
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/properties/  #属性文件地址，只要指定文件夹的路径

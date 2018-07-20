@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    config:
+#      username: jacky123  #configservice认证的用户名
+#      password: admin123   #认证密码
+      label: master   # 仓库的分支节点
+      discovery:
+        enabled: true
+        service-id: ShrekConfig
+      profile: dev   #仓库中对应文件的环境，如dev、prod、test等
+      fail-fast: true
+    bus:
+      trace:
+        enabled: true  #开启消息跟踪
+  application:
+    name: ShrekGateWay
+  rabbitmq:
+    host: 192.168.99.100
+    port: 5672
+    username: guest
+    password: guest
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+  instance:
+    prefer-ip-address: true
