@@ -1,8 +1,8 @@
 package com.shrek.oauth2service.security;
 
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.shrek.oauth2service.entity.ShrekClientDetails;
 import com.shrek.oauth2service.service.ShrekClientDetailsService;
 import org.apache.commons.lang.StringUtils;

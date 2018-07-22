@@ -13,7 +13,7 @@ spring:
       trace:
         enabled: true  #开启消息跟踪
   application:
-    name: ShrekSupervisorShow
+    name: ShrekShrekManage
   rabbitmq:
     host: 192.168.99.100
     port: 5672

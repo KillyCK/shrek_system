@@ -18,7 +18,7 @@
         <module>supervisor</module>
         <module>consumer</module>
         <module>api-gateway</module>
-        <module>supervisor-show</module>
+        <module>shrek-manage</module>
 
         <module>turbine-service</module>
         <module>alipay</module>

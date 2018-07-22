@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/spring-security-sso/spring-security-sso-auth-server" />
+    <file type="web" url="file://$PROJECT_DIR$/spring-security-sso/spring-security-sso-ui" />
+    <file type="web" url="file://$PROJECT_DIR$/spring-security-sso/spring-security-sso-ui-2" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
@@ -16,6 +21,7 @@
         <option value="$PROJECT_DIR$/consumer/pom.xml" />
         <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/supervisor-show/pom.xml" />
+        <option value="$PROJECT_DIR$/shrek-manage/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -23,6 +29,8 @@
         <option value="$PROJECT_DIR$/oauth2-resource/pom.xml" />
         <option value="$PROJECT_DIR$/service-hi/pom.xml" />
         <option value="$PROJECT_DIR$/service-miya/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-security-sso/pom.xml" />
+        <option value="$PROJECT_DIR$/supervisor-show/pom.xml" />
       </set>
     </option>
   </component>

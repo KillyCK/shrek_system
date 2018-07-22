@@ -2,20 +2,13 @@ package com.shrek.oauth2service.config;
 
 import com.shrek.oauth2service.security.ShrekPasswordEncoder;
 import com.shrek.oauth2service.security.ShrekUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
-import org.springframework.security.web.AuthenticationEntryPoint;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
 *
@@ -28,20 +21,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //@Autowired(required = false)
    // private AuthenticationEntryPoint authenticationEntryPoint;
 
+    /**
+     * 验证用户
+     * @return
+     */
     @Bean
     public UserDetailsService userDetailsService(){
         return new ShrekUserDetailsService();
     }
 
+    /**
+     * 密码的解析方式
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new ShrekPasswordEncoder();
     }
 
-    @Bean
+/*    @Bean
     public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
         return new SecurityEvaluationContextExtension();
-    }
+    }*/
 
     //不定义没有password grant_type
     @Override
@@ -50,12 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * 验证用户
+     * @param auth
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth
-            .userDetailsService(userDetailsService())
-            .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
     /**
      * 1\这里记得设置requestMatchers,不拦截需要token验证的url

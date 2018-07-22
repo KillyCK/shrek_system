@@ -52,6 +52,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     UserDetailsService userDetailsService;
 
+    /**
+     * 初始化授权页面
+     */
     @PostConstruct
     public void init() {
         authorizationEndpoint.setUserApprovalPage("forward:/oauth2/shrek_approval_page");
@@ -68,7 +71,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     /**
-     * 保存AuthorizationCode
+     * redis保存AuthorizationCode
      * @return
      */
     @Bean
@@ -77,6 +80,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return  redisAuthorizationCodeServices ;
     }
 
+    /**
+     * clientDetail详情——》数据库
+     * @return
+     */
     @Bean
     public ClientDetailsService clientDetailsService(){
         return new MyClientDetailsService();
