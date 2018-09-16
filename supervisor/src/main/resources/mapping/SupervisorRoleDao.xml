@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shrek.supervisor.dao.SupervisorRoleDao">
-  <resultMap id="BaseResultMap" type="com.shrek.supervisor.entity.SupervisorRole">
+<mapper namespace="com.shrek.dbservice.dao.SupervisorRoleDao">
+  <resultMap id="BaseResultMap" type="com.shrek.dbservice.entity.SupervisorRole">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="supervisor_id" jdbcType="INTEGER" property="supervisorId" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List">
     id, supervisor_id, role_id
   </sql>
-  <select id="selectByExample" parameterType="com.shrek.supervisor.entity.SupervisorRoleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.shrek.dbservice.entity.SupervisorRoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -91,19 +91,19 @@
     delete from supervisor_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.shrek.supervisor.entity.SupervisorRoleExample">
+  <delete id="deleteByExample" parameterType="com.shrek.dbservice.entity.SupervisorRoleExample">
     delete from supervisor_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.shrek.supervisor.entity.SupervisorRole">
+  <insert id="insert" parameterType="com.shrek.dbservice.entity.SupervisorRole">
     insert into supervisor_role (id, supervisor_id, role_id
       )
     values (#{id,jdbcType=INTEGER}, #{supervisorId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.shrek.supervisor.entity.SupervisorRole">
+  <insert id="insertSelective" parameterType="com.shrek.dbservice.entity.SupervisorRole">
     insert into supervisor_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -128,7 +128,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.shrek.supervisor.entity.SupervisorRoleExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.shrek.dbservice.entity.SupervisorRoleExample" resultType="java.lang.Long">
     select count(*) from supervisor_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -160,7 +160,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.supervisor.entity.SupervisorRole">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.dbservice.entity.SupervisorRole">
     update supervisor_role
     <set>
       <if test="supervisorId != null">
@@ -172,7 +172,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shrek.supervisor.entity.SupervisorRole">
+  <update id="updateByPrimaryKey" parameterType="com.shrek.dbservice.entity.SupervisorRole">
     update supervisor_role
     set supervisor_id = #{supervisorId,jdbcType=INTEGER},
       role_id = #{roleId,jdbcType=INTEGER}

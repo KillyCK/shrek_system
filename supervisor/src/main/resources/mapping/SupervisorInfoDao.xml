@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shrek.supervisor.dao.SupervisorInfoDao">
-  <resultMap id="BaseResultMap" type="com.shrek.supervisor.entity.SupervisorInfo">
+<mapper namespace="com.shrek.dbservice.dao.SupervisorInfoDao">
+  <resultMap id="BaseResultMap" type="com.shrek.dbservice.entity.SupervisorInfo">
     <id column="supervisor_info_id" jdbcType="INTEGER" property="supervisorInfoId" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
@@ -79,7 +79,7 @@
     supervisor_info_id, nickname, real_name, position, email, qq, wx, phone, image_url, 
     school, gender, birth_date, insert_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="com.shrek.supervisor.entity.SupervisorInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.shrek.dbservice.entity.SupervisorInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -103,13 +103,13 @@
     delete from supervisor_info
     where supervisor_info_id = #{supervisorInfoId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.shrek.supervisor.entity.SupervisorInfoExample">
+  <delete id="deleteByExample" parameterType="com.shrek.dbservice.entity.SupervisorInfoExample">
     delete from supervisor_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.shrek.supervisor.entity.SupervisorInfo">
+  <insert id="insert" parameterType="com.shrek.dbservice.entity.SupervisorInfo">
     insert into supervisor_info (supervisor_info_id, nickname, real_name, 
       position, email, qq, 
       wx, phone, image_url, 
@@ -121,7 +121,7 @@
       #{school,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{birthDate,jdbcType=TIMESTAMP}, 
       #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.shrek.supervisor.entity.SupervisorInfo">
+  <insert id="insertSelective" parameterType="com.shrek.dbservice.entity.SupervisorInfo">
     insert into supervisor_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="supervisorInfoId != null">
@@ -212,7 +212,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.shrek.supervisor.entity.SupervisorInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.shrek.dbservice.entity.SupervisorInfoExample" resultType="java.lang.Long">
     select count(*) from supervisor_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -288,7 +288,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.supervisor.entity.SupervisorInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.dbservice.entity.SupervisorInfo">
     update supervisor_info
     <set>
       <if test="nickname != null">
@@ -333,7 +333,7 @@
     </set>
     where supervisor_info_id = #{supervisorInfoId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shrek.supervisor.entity.SupervisorInfo">
+  <update id="updateByPrimaryKey" parameterType="com.shrek.dbservice.entity.SupervisorInfo">
     update supervisor_info
     set nickname = #{nickname,jdbcType=VARCHAR},
       real_name = #{realName,jdbcType=VARCHAR},

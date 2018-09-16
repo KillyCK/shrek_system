@@ -5,7 +5,6 @@ import com.shrek.consumer.entity.SupervisorExample;
 import com.shrek.consumer.service.SupervisorService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +20,11 @@ import java.util.List;
 public class SupervisorController {
 	
 	@Autowired
-    SupervisorService supervisorService;
+	SupervisorService supervisorService;
 	
     @ApiOperation(value="统计supervisor", notes="根据example统计supervisor")
     @ApiImplicitParam(name = "example", value = "管理员查询实体SupervisorExample", required = true, dataType = "SupervisorExample")
     @RequestMapping(value="/countByExample", method=RequestMethod.POST)
-    @PreAuthorize("hasAuthority('supervisor:countByExample')")
 	public long countByExample(@RequestBody SupervisorExample example) {
 		return supervisorService.countByExample(example);
 	}
@@ -34,14 +32,12 @@ public class SupervisorController {
     @ApiOperation(value="选择删除supervisor", notes="根据example删除supervisor")
     @ApiImplicitParam(name = "example", value = "管理员查询实体SupervisorExample", required = true, dataType = "SupervisorExample")
     @RequestMapping(value="/deleteByExample", method=RequestMethod.DELETE)
-    @PreAuthorize("hasAuthority('supervisor:deleteByExample')")
 	public int deleteByExample(@RequestBody SupervisorExample example) {
 		return supervisorService.deleteByExample(example);
 	}
 
     @ApiOperation(value="主键删除supervisor", notes="根据主键id删除supervisor")
     @RequestMapping(value="/deleteByPrimaryKey", method=RequestMethod.DELETE)
-    @PreAuthorize("hasAuthority('supervisor:deleteByPrimaryKey')")
 	public int deleteByPrimaryKey(@ApiParam("主键id") @RequestParam Integer id) {
 		return supervisorService.deleteByPrimaryKey(id);
 	}
@@ -49,7 +45,6 @@ public class SupervisorController {
     @ApiOperation(value="添加supervisor", notes="利用supervisor实体进行插入")
     @ApiImplicitParam(name = "record", value = "管理员实体Supervisor", required = true, dataType = "Supervisor")
     @RequestMapping(value="/insert", method=RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('supervisor:insert')")
 	public int insert(@RequestBody Supervisor record) {
 		return supervisorService.insert(record);
 	}
@@ -57,7 +52,6 @@ public class SupervisorController {
     @ApiOperation(value="选择添加supervisor", notes="利用supervisor实体进行参数选择性的插入")
     @ApiImplicitParam(name = "record", value = "管理员实体Supervisor", required = true, dataType = "Supervisor")
     @RequestMapping(value="/insertSelective", method=RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('supervisor:insertSelective')")
 	public int insertSelective(@RequestBody Supervisor record) {
 		return supervisorService.insertSelective(record);
 	}
@@ -65,14 +59,14 @@ public class SupervisorController {
     @ApiOperation(value="查询supervisor", notes="利用supervisorExample实体进行查询supervisor集合")
     @ApiImplicitParam(name = "example", value = "管理员实体SupervisorExample", required = true, dataType = "SupervisorExample")
     @RequestMapping(value="/selectByExample", method=RequestMethod.POST)
-    @PreAuthorize("hasAuthority('supervisor:selectByExample')")
 	public List<Supervisor> selectByExample(@RequestBody SupervisorExample example) {
+
+		System.out.println(example.toString());
 		return supervisorService.selectByExample(example);
 	}
 
     @ApiOperation(value="主键查询supervisor", notes="根据主键id查询supervisor")
     @RequestMapping(value="/selectByPrimaryKey", method=RequestMethod.POST)
-    @PreAuthorize("hasAuthority('supervisor:selectByPrimaryKey')")
 	public Supervisor selectByPrimaryKey(@ApiParam("主键id") @RequestParam Integer id) {
 		return supervisorService.selectByPrimaryKey(id);
 	}
@@ -83,7 +77,6 @@ public class SupervisorController {
             @ApiImplicitParam(name = "example", value = "管理员查询实体", required = true, dataType = "SupervisorExample")
     })
     @RequestMapping(value="/updateByExampleSelective", method=RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('supervisor:updateByExampleSelective')")
 	public int updateByExampleSelective(@RequestBody Supervisor record, @RequestBody SupervisorExample example) {
 		return supervisorService.updateByExampleSelective(record, example);
 	}
@@ -94,7 +87,6 @@ public class SupervisorController {
             @ApiImplicitParam(name = "example", value = "管理员查询实体", required = true, dataType = "SupervisorExample")
     })
     @RequestMapping(value="/updateByExample", method=RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('supervisor:updateByExample')")
 	public int updateByExample(@RequestBody Supervisor record, @RequestBody SupervisorExample example) {
 		return supervisorService.updateByExample(record, example);
 	}
@@ -102,7 +94,6 @@ public class SupervisorController {
     @ApiOperation(value="更新supervisor", notes="根据supervisor实体进行选择性的参数更新")
     @ApiImplicitParam(name = "record", value = "管理员实体Supervisor", required = true, dataType = "Supervisor")
     @RequestMapping(value="/updateByPrimaryKeySelective", method=RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('supervisor:updateByPrimaryKeySelective')")
 	public int updateByPrimaryKeySelective(@RequestBody Supervisor record) {
 		return supervisorService.updateByPrimaryKeySelective(record);
 	}
@@ -110,7 +101,6 @@ public class SupervisorController {
     @ApiOperation(value="更新supervisor", notes="根据supervisor实体进行更新")
     @ApiImplicitParam(name = "record", value = "管理员实体Supervisor", required = true, dataType = "Supervisor")
     @RequestMapping(value="/updateByPrimaryKey", method=RequestMethod.PUT)
-    @PreAuthorize("hasAuthority('supervisor:updateByPrimaryKey')")
 	public int updateByPrimaryKey(@RequestBody Supervisor record) {
 		return supervisorService.updateByPrimaryKey(record);
 	}

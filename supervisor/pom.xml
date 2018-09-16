@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.shrek</groupId>
-    <artifactId>supervisor</artifactId>
+    <artifactId>db-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>supervisor</name>
+    <name>db-service</name>
     <description>后台持久化层</description>
 
     <parent>

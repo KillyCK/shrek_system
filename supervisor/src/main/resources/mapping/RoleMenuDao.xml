@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shrek.supervisor.dao.RoleMenuDao">
-  <resultMap id="BaseResultMap" type="com.shrek.supervisor.entity.RoleMenu">
+<mapper namespace="com.shrek.dbservice.dao.RoleMenuDao">
+  <resultMap id="BaseResultMap" type="com.shrek.dbservice.entity.RoleMenu">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="menu_id" jdbcType="INTEGER" property="menuId" />
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List">
     id, role_id, menu_id
   </sql>
-  <select id="selectByExample" parameterType="com.shrek.supervisor.entity.RoleMenuExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.shrek.dbservice.entity.RoleMenuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -91,19 +91,19 @@
     delete from role_menu
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.shrek.supervisor.entity.RoleMenuExample">
+  <delete id="deleteByExample" parameterType="com.shrek.dbservice.entity.RoleMenuExample">
     delete from role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.shrek.supervisor.entity.RoleMenu">
+  <insert id="insert" parameterType="com.shrek.dbservice.entity.RoleMenu">
     insert into role_menu (id, role_id, menu_id
       )
     values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.shrek.supervisor.entity.RoleMenu">
+  <insert id="insertSelective" parameterType="com.shrek.dbservice.entity.RoleMenu">
     insert into role_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -128,7 +128,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.shrek.supervisor.entity.RoleMenuExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.shrek.dbservice.entity.RoleMenuExample" resultType="java.lang.Long">
     select count(*) from role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -160,7 +160,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.supervisor.entity.RoleMenu">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.dbservice.entity.RoleMenu">
     update role_menu
     <set>
       <if test="roleId != null">
@@ -172,7 +172,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shrek.supervisor.entity.RoleMenu">
+  <update id="updateByPrimaryKey" parameterType="com.shrek.dbservice.entity.RoleMenu">
     update role_menu
     set role_id = #{roleId,jdbcType=INTEGER},
       menu_id = #{menuId,jdbcType=INTEGER}

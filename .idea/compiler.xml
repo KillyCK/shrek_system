@@ -7,30 +7,32 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="admin-service" />
-        <module name="alipay" />
         <module name="api-gateway" />
         <module name="config-service" />
         <module name="consumer" />
         <module name="eureka-service" />
         <module name="oauth2-service" />
-        <module name="paypal" />
-        <module name="shrek-manage" />
+        <module name="spring-boot-fastDFS" />
         <module name="supervisor" />
-        <module name="turbine-service" />
-        <module name="wxpay" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="alipay" target="1.8" />
       <module name="demo" target="1.8" />
       <module name="oauth2-resource" target="1.8" />
+      <module name="paypal" target="1.8" />
       <module name="service-zipkin" target="1.5" />
       <module name="service2-zipkin" target="1.5" />
+      <module name="shrek-manage" target="1.8" />
+      <module name="shrek-manage (1)" target="1.8" />
       <module name="spring-security-sso" target="1.5" />
       <module name="spring-security-sso-auth-server" target="1.5" />
       <module name="spring-security-sso-ui" target="1.5" />
       <module name="spring-security-sso-ui-2" target="1.5" />
       <module name="supervisor-show" target="1.8" />
       <module name="turbine" target="1.8" />
+      <module name="turbine-service" target="1.8" />
+      <module name="wxpay" target="1.8" />
       <module name="zipkin-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>

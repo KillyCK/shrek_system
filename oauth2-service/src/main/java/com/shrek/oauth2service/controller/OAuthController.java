@@ -18,7 +18,7 @@ import java.util.Map;
  **/
 @Controller
 @SessionAttributes({ "authorizationRequest" })
-@RequestMapping(value="/oauth2")
+@RequestMapping(value= "/templates")
 public class OAuthController {
 
     @RequestMapping({ "/shrek_approval_page" })

@@ -5,7 +5,6 @@ import com.shrek.consumer.entity.SupervisorImageExample;
 import com.shrek.consumer.service.SupervisorImageService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +26,6 @@ public class SupervisorImageController {
 	@ApiOperation(value="统计supervisorImage", notes="根据example统计supervisorImage")
     @ApiImplicitParam(name = "example", value = "管理员图片查询实体supervisorImageExample", required = true, dataType = "SupervisorImageExample")
     @RequestMapping(value="/countByExample", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('supervisorImage:countByExample')")
 	public long countByExample(@RequestBody SupervisorImageExample example) {
 		return supervisorImageService.countByExample(example);
 	}
@@ -35,14 +33,12 @@ public class SupervisorImageController {
     @ApiOperation(value="选择删除supervisorImage", notes="根据example删除supervisorImage")
     @ApiImplicitParam(name = "example", value = "管理员图片查询实体supervisorImageExample", required = true, dataType = "SupervisorImageExample")
     @RequestMapping(value="/deleteByExample", method=RequestMethod.DELETE)
-	@PreAuthorize("hasAuthority('supervisorImage:deleteByExample')")
 	public int deleteByExample(@RequestBody SupervisorImageExample example) {
 		return supervisorImageService.deleteByExample(example);
 	}
 
     @ApiOperation(value="主键删除supervisorImage", notes="根据主键id删除supervisorImage")
     @RequestMapping(value="/deleteByPrimaryKey", method=RequestMethod.DELETE)
-	@PreAuthorize("hasAuthority('supervisorImage:deleteByPrimaryKey')")
 	public int deleteByPrimaryKey(@ApiParam("主键id") @RequestParam Integer id) {
 		return supervisorImageService.deleteByPrimaryKey(id);
 	}
@@ -50,7 +46,6 @@ public class SupervisorImageController {
     @ApiOperation(value="添加supervisorImage", notes="利用supervisorImage实体进行插入")
     @ApiImplicitParam(name = "record", value = "管理员图片实体supervisorImage", required = true, dataType = "SupervisorImage")
     @RequestMapping(value="/insert", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorImage:insert')")
 	public int insert(@RequestBody SupervisorImage record) {
 		return supervisorImageService.insert(record);
 	}
@@ -58,7 +53,6 @@ public class SupervisorImageController {
     @ApiOperation(value="选择添加supervisorImage", notes="利用supervisorImage实体进行参数选择性的插入")
     @ApiImplicitParam(name = "record", value = "管理员图片实体supervisorImage", required = true, dataType = "SupervisorImage")
     @RequestMapping(value="/insertSelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorImage:insertSelective')")
 	public int insertSelective(@RequestBody SupervisorImage record) {
 		return supervisorImageService.insertSelective(record);
 	}
@@ -66,14 +60,12 @@ public class SupervisorImageController {
     @ApiOperation(value="查询supervisorImage", notes="利用supervisorImageExample实体进行查询supervisorImage集合")
     @ApiImplicitParam(name = "example", value = "管理员图片实体supervisorImageExample", required = true, dataType = "SupervisorImageExample")
     @RequestMapping(value="/selectByExample", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('supervisorImage:selectByExample')")
 	public List<SupervisorImage> selectByExample(@RequestBody SupervisorImageExample example) {
 		return supervisorImageService.selectByExample(example);
 	}
 
     @ApiOperation(value="主键查询supervisorImage", notes="根据主键id查询supervisorImage")
     @RequestMapping(value="/selectByPrimaryKey", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('supervisorImage:selectByPrimaryKey')")
 	public SupervisorImage selectByPrimaryKey(@ApiParam("主键id") @RequestParam Integer id) {
 		return supervisorImageService.selectByPrimaryKey(id);
 	}
@@ -84,7 +76,6 @@ public class SupervisorImageController {
             @ApiImplicitParam(name = "example", value = "管理员图片查询实体", required = true, dataType = "SupervisorImageExample")
     })
     @RequestMapping(value="/updateByExampleSelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorImage:updateByExampleSelective')")
 	public int updateByExampleSelective(@RequestBody SupervisorImage record, @RequestBody SupervisorImageExample example) {
 		return supervisorImageService.updateByExampleSelective(record, example);
 	}
@@ -95,7 +86,6 @@ public class SupervisorImageController {
             @ApiImplicitParam(name = "example", value = "管理员图片查询实体", required = true, dataType = "SupervisorImageExample")
     })
     @RequestMapping(value="/updateByExample", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorImage:updateByExample')")
 	public int updateByExample(@RequestBody SupervisorImage record, @RequestBody SupervisorImageExample example) {
 		return supervisorImageService.updateByExample(record, example);
 	}
@@ -103,7 +93,6 @@ public class SupervisorImageController {
     @ApiOperation(value="更新supervisorImage", notes="根据supervisorImage实体进行选择性的参数更新")
     @ApiImplicitParam(name = "record", value = "管理员图片实体supervisorImage", required = true, dataType = "SupervisorImage")
     @RequestMapping(value="/updateByPrimaryKeySelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorImage:updateByPrimaryKeySelective')")
 	public int updateByPrimaryKeySelective(@RequestBody SupervisorImage record) {
 		return supervisorImageService.updateByPrimaryKeySelective(record);
 	}
@@ -111,7 +100,6 @@ public class SupervisorImageController {
     @ApiOperation(value="更新supervisorImage", notes="根据supervisorImage实体进行更新")
     @ApiImplicitParam(name = "record", value = "管理员图片实体supervisorImage", required = true, dataType = "SupervisorImage")
     @RequestMapping(value="/updateByPrimaryKey", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorImage:updateByPrimaryKey')")
 	public int updateByPrimaryKey(@RequestBody SupervisorImage record) {
 		return supervisorImageService.updateByPrimaryKey(record);
 	}

@@ -25,23 +25,9 @@ spring:
     #password:
     port: 6379
 
-auth-server: http://localhost:8088  # sso-server地址
 
-security:
-  oauth2:
-    client:
-      clientId: client
-      clientSecret: secret
-      userAuthorizationUri: ${auth-server}/oauth/authorize #请求认证的地址
-      grant-type: client_credentials
-      scope: read,write,trust
-      access-token-uri: ${auth-server}/oauth/token  #请求令牌的地址
-      refresh-token-validity-seconds: 2000
-      access-token-validity-seconds: 1800
-    resource:
-      userInfoUri: ${auth-server}/supervisor/user
-    authorization:
-      check-token-access: ${auth-server}/oauth/check_token
+
+
 
 # 打开feign对hystrix的支持
 feign:

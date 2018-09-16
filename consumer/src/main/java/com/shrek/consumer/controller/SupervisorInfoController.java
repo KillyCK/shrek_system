@@ -5,7 +5,6 @@ import com.shrek.consumer.entity.SupervisorInfoExample;
 import com.shrek.consumer.service.SupervisorInfoService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  * create date ：2018年6月2日 下午1:43:16
  */
 @RestController
-@RequestMapping(value="/supervisorInfo") 
+@RequestMapping(value="/supervisorInfo")
 @Api(value = "SupervisorInfoController", tags = "supervisorInfo相关的api")
 public class SupervisorInfoController {
 
@@ -26,7 +25,6 @@ public class SupervisorInfoController {
 	@ApiOperation(value="统计supervisorInfo", notes="根据example统计supervisorInfo")
     @ApiImplicitParam(name = "example", value = "管理员信息查询实体supervisorInfoExample", required = true, dataType = "SupervisorInfoExample")
     @RequestMapping(value="/countByExample", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('supervisorInfo:countByExample')")
 	public long countByExample(@RequestBody SupervisorInfoExample example) {
 		return supervisorInfoService.countByExample(example);
 	}
@@ -34,14 +32,12 @@ public class SupervisorInfoController {
     @ApiOperation(value="选择删除supervisorInfo", notes="根据example删除supervisorInfo")
     @ApiImplicitParam(name = "example", value = "管理员信息查询实体supervisorInfoExample", required = true, dataType = "SupervisorInfoExample")
     @RequestMapping(value="/deleteByExample", method=RequestMethod.DELETE)
-	@PreAuthorize("hasAuthority('supervisorInfo:deleteByExample')")
 	public int deleteByExample(@RequestBody SupervisorInfoExample example) {
 		return supervisorInfoService.deleteByExample(example);
 	}
 
     @ApiOperation(value="主键删除supervisorInfo", notes="根据主键id删除supervisorInfo")
     @RequestMapping(value="/deleteByPrimaryKey", method=RequestMethod.DELETE)
-	@PreAuthorize("hasAuthority('supervisorInfo:deleteByPrimaryKey')")
 	public int deleteByPrimaryKey(@ApiParam("主键id") @RequestParam Integer id) {
 		return supervisorInfoService.deleteByPrimaryKey(id);
 	}
@@ -49,7 +45,6 @@ public class SupervisorInfoController {
     @ApiOperation(value="添加supervisorInfo", notes="利用supervisorInfo实体进行插入")
     @ApiImplicitParam(name = "record", value = "管理员信息实体supervisorInfo", required = true, dataType = "SupervisorInfo")
     @RequestMapping(value="/insert", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorInfo:insert')")
 	public int insert(@RequestBody SupervisorInfo record) {
 		return supervisorInfoService.insert(record);
 	}
@@ -57,7 +52,6 @@ public class SupervisorInfoController {
     @ApiOperation(value="选择添加supervisorInfo", notes="利用supervisorInfo实体进行参数选择性的插入")
     @ApiImplicitParam(name = "record", value = "管理员信息实体supervisorInfo", required = true, dataType = "SupervisorInfo")
     @RequestMapping(value="/insertSelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorInfo:insertSelective')")
 	public int insertSelective(@RequestBody SupervisorInfo record) {
 		return supervisorInfoService.insertSelective(record);
 	}
@@ -65,14 +59,12 @@ public class SupervisorInfoController {
     @ApiOperation(value="查询supervisorInfo", notes="利用supervisorInfoExample实体进行查询supervisorInfo集合")
     @ApiImplicitParam(name = "example", value = "管理员信息实体supervisorInfoExample", required = true, dataType = "SupervisorInfoExample")
     @RequestMapping(value="/selectByExample", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('supervisorInfo:selectByExample')")
 	public List<SupervisorInfo> selectByExample(@RequestBody SupervisorInfoExample example) {
 		return supervisorInfoService.selectByExample(example);
 	}
 
     @ApiOperation(value="主键查询supervisorInfo", notes="根据主键id查询supervisorInfo")
     @RequestMapping(value="/selectByPrimaryKey", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('supervisorInfo:selectByPrimaryKey')")
 	public SupervisorInfo selectByPrimaryKey(@ApiParam("主键id") @RequestParam Integer id) {
 		return supervisorInfoService.selectByPrimaryKey(id);
 	}
@@ -83,7 +75,6 @@ public class SupervisorInfoController {
             @ApiImplicitParam(name = "example", value = "管理员信息查询实体", required = true, dataType = "SupervisorInfoExample")
     })
     @RequestMapping(value="/updateByExampleSelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorInfo:updateByExampleSelective')")
 	public int updateByExampleSelective(@RequestBody SupervisorInfo record, @RequestBody SupervisorInfoExample example) {
 		return supervisorInfoService.updateByExampleSelective(record, example);
 	}
@@ -94,7 +85,6 @@ public class SupervisorInfoController {
             @ApiImplicitParam(name = "example", value = "管理员信息查询实体", required = true, dataType = "SupervisorInfoExample")
     })
     @RequestMapping(value="/updateByExample", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorInfo:updateByExample')")
 	public int updateByExample(@RequestBody SupervisorInfo record, @RequestBody SupervisorInfoExample example) {
 		return supervisorInfoService.updateByExample(record, example);
 	}
@@ -102,7 +92,6 @@ public class SupervisorInfoController {
     @ApiOperation(value="更新supervisorInfo", notes="根据supervisorInfo实体进行选择性的参数更新")
     @ApiImplicitParam(name = "record", value = "管理员信息实体supervisorInfo", required = true, dataType = "SupervisorInfo")
     @RequestMapping(value="/updateByPrimaryKeySelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorInfo:updateByPrimaryKeySelective')")
 	public int updateByPrimaryKeySelective(@RequestBody SupervisorInfo record) {
 		return supervisorInfoService.updateByPrimaryKeySelective(record);
 	}
@@ -110,7 +99,6 @@ public class SupervisorInfoController {
     @ApiOperation(value="更新supervisorInfo", notes="根据supervisorInfo实体进行更新")
     @ApiImplicitParam(name = "record", value = "管理员信息实体supervisorInfo", required = true, dataType = "SupervisorInfo")
     @RequestMapping(value="/updateByPrimaryKey", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('supervisorInfo:updateByPrimaryKey')")
 	public int updateByPrimaryKey(@RequestBody SupervisorInfo record) {
 		return supervisorInfoService.updateByPrimaryKey(record);
 	}

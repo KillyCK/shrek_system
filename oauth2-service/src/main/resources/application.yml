@@ -42,6 +42,8 @@ server:
 
 
 spring:
+  session:
+    store-type: redis
   sleuth:
     sampler:
       percentage: 1.0
@@ -53,7 +55,7 @@ spring:
         prefer-ip: true # 解决windows下运行时无法识别主机名的问题
         url: http://localhost:8082/ # 向服务端注册的地址
   thymeleaf:
-    prefix: classpath:oauth2/
+    prefix: classpath:templates/
     cache:  false
   redis:
     host: 192.168.99.100

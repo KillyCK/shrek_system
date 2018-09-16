@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shrek.supervisor.dao.PositionDao">
-  <resultMap id="BaseResultMap" type="com.shrek.supervisor.entity.Position">
+<mapper namespace="com.shrek.dbservice.dao.PositionDao">
+  <resultMap id="BaseResultMap" type="com.shrek.dbservice.entity.Position">
     <id column="position_id" jdbcType="INTEGER" property="positionId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="department_id" jdbcType="INTEGER" property="departmentId" />
@@ -72,7 +72,7 @@
   <sql id="Base_Column_List">
     position_id, name, department_id, parent, insert_by, update_by, insert_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="com.shrek.supervisor.entity.PositionExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.shrek.dbservice.entity.PositionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -96,13 +96,13 @@
     delete from position
     where position_id = #{positionId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.shrek.supervisor.entity.PositionExample">
+  <delete id="deleteByExample" parameterType="com.shrek.dbservice.entity.PositionExample">
     delete from position
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.shrek.supervisor.entity.Position">
+  <insert id="insert" parameterType="com.shrek.dbservice.entity.Position">
     insert into position (position_id, name, department_id, 
       parent, insert_by, update_by, 
       insert_time, update_time)
@@ -110,7 +110,7 @@
       #{parent,jdbcType=INTEGER}, #{insertBy,jdbcType=INTEGER}, #{updateBy,jdbcType=INTEGER}, 
       #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.shrek.supervisor.entity.Position">
+  <insert id="insertSelective" parameterType="com.shrek.dbservice.entity.Position">
     insert into position
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="positionId != null">
@@ -165,7 +165,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.shrek.supervisor.entity.PositionExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.shrek.dbservice.entity.PositionExample" resultType="java.lang.Long">
     select count(*) from position
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -217,7 +217,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.supervisor.entity.Position">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shrek.dbservice.entity.Position">
     update position
     <set>
       <if test="name != null">
@@ -244,7 +244,7 @@
     </set>
     where position_id = #{positionId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shrek.supervisor.entity.Position">
+  <update id="updateByPrimaryKey" parameterType="com.shrek.dbservice.entity.Position">
     update position
     set name = #{name,jdbcType=VARCHAR},
       department_id = #{departmentId,jdbcType=INTEGER},

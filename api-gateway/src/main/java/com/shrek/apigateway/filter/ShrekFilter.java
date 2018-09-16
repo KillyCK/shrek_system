@@ -1,14 +1,25 @@
 package com.shrek.apigateway.filter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.xiaoleilu.hutool.collection.CollectionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
+/**
+* @Author: shrek
+* @Date: 2018/8/24 13:56
+* @Description: 拦截器
+**/
 @Component
 public class ShrekFilter extends ZuulFilter{
 
@@ -25,26 +36,35 @@ public class ShrekFilter extends ZuulFilter{
 
     @Override
     public boolean shouldFilter() {
-        return false;
+        return true;
     }
 
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        log.info(String.format("%s >>> %s", request.getMethod(), request.getRequestURL().toString()));
-        Object accessToken = request.getParameter("token");
-        if(accessToken == null) {
-            log.warn("token is empty");
-            ctx.setSendZuulResponse(false);
-            ctx.setResponseStatusCode(401);
-            try {
-                ctx.getResponse().getWriter().write("token is empty");
-            }catch (Exception e){}
 
-            return null;
+        try {
+
+            //解决zuul token传递问题
+            Authentication user = SecurityContextHolder.getContext().getAuthentication();
+            if(user!=null){
+
+                if(user instanceof OAuth2Authentication){
+
+                    Authentication athentication = (Authentication)user;
+
+                    OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) athentication.getDetails() ;
+                    ctx.addZuulRequestHeader("Authorization", "bearer "+details.getTokenValue());
+                }
+
+            }
+
+        } catch (Exception e) {
+
         }
-        log.info("ok");
         return null;
+
+
     }
 }

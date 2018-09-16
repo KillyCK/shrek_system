@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,8 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    //@Autowired(required = false)
-   // private AuthenticationEntryPoint authenticationEntryPoint;
 
     /**
      * 验证用户
@@ -67,45 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 2\这里记得对oauth的url进行保护,正常是需要登录态才可以
      */
 
-/*    @Override
-    public void configure(HttpSecurity http) throws Exception {
-      http.csrf().disable();
-        http
-            .requestMatchers().antMatchers("/oauth/**","/login/**","/logout/**")
-            .and()
-            .authorizeRequests()
-            .antMatchers("/oauth/**").authenticated()
-            .and()
-            .formLogin().permitAll();
-    }*/
-
-/*    @Override
-    public void configure(HttpSecurity http) throws Exception {
-
-        http
-            .csrf().disable()
-            .headers().frameOptions().disable()
-            .and().exceptionHandling().authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-            .and().requestMatchers().antMatchers("/oauth/**","/login/**","/logout/**")
-            //.and().authorizeRequests().antMatchers("/oauth/**").authenticated()
-            .and().formLogin().permitAll()
-            //.and().formLogin().loginPage("/login").permitAll()
-            //.and().formLogin().loginPage("/login").defaultSuccessUrl("/main").failureUrl("//login?error=true").permitAll()
-            //.and().logout().logoutSuccessUrl("/login").permitAll()
-            .and().authorizeRequests().antMatchers( "/actuator/**" ,"/oauth/**","/login/**","/logout/**").permitAll() //放开admin监控
-            .and().authorizeRequests().anyRequest().authenticated()
-            .and().httpBasic();
-
-        // 基于密码 等模式可以无session,不支持授权码模式
-        if (authenticationEntryPoint != null) {
-            http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        } else {
-            // 授权码模式单独处理，需要session的支持，此模式可以支持所有oauth2的认证
-            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
-        }
-
-    }*/
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/favor.ioc");
+    }
 
 }

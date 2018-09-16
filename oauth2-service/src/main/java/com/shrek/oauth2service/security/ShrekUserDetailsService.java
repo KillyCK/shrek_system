@@ -4,6 +4,7 @@ import com.shrek.oauth2service.entity.Supervisor;
 import com.shrek.oauth2service.entity.SupervisorExample;
 import com.shrek.oauth2service.service.SupervisorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,8 @@ import java.util.Set;
 */
 public class ShrekUserDetailsService implements UserDetailsService {
 
+/*    @Autowired
+    private RedisConnectionFactory connectionFactory;//先引入redis防止后面引入的时候报错*/
     @Autowired
     private SupervisorService supervisorService;
 
@@ -40,6 +43,7 @@ public class ShrekUserDetailsService implements UserDetailsService {
 
         if (supervisors.size() != 0){
 
+            //connectionFactory.getConnection().set(("id"+supervisors.get(0).getUsername()).getBytes(),String.valueOf(supervisors.get(0).getSupervisorId()).getBytes());
             Set<GrantedAuthority> grantedAuthorities = supervisors.get(0).getAuthorities();
             //System.out.println(supervisors.get(0).getUsername()+supervisors.get(0).getPasswd()+grantedAuthorities);
             return new User(supervisors.get(0).getUsername(),supervisors.get(0).getPasswd(),grantedAuthorities);

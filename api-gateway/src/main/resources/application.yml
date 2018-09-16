@@ -20,9 +20,36 @@ spring:
       client:
         prefer-ip: true # 解决windows下运行时无法识别主机名的问题
         url: http://localhost:8082/ # 向服务端注册的地址
+  security:
+    user:
+      name: shrek
+      password: shrek
+  session:
+    store-type: redis
+#配置redis
+  redis:
+    host: 192.168.99.100
+    #password:
+    port: 6379
+
+#认证服务器地址
+security:
+  oauth2:
+    client:
+      client-id: client
+      client-secret: secret
+      user-authorization-uri: http://127.0.0.1:8088/oauth/authorize
+      access-token-uri: http://127.0.0.1:8088/oauth/token
+    resource:
+      user-info-uri: http://127.0.0.1:8088/supervisor//user #返回认证服务器检查
+#        prefer-token-info: false
+      token-info-uri: http://127.0.0.1:8088/oauth/check_token
+      prefer-token-info: true
 
 #zuul路由配置
 zuul:
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+  ignoredServices: '*'
   routes:
     api-a:
       path: /api-a/**
@@ -33,3 +60,22 @@ zuul:
     api-c:
       path: /api-c/**
       serviceId: SHREKOAUTH2
+  add-proxy-headers: true
+
+####超时配置####
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  eureka:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 600000

@@ -13,15 +13,10 @@
         <option value="$PROJECT_DIR$/eureka-service/pom.xml" />
         <option value="$PROJECT_DIR$/admin-service/pom.xml" />
         <option value="$PROJECT_DIR$/config-service/pom.xml" />
-        <option value="$PROJECT_DIR$/turbine-service/pom.xml" />
-        <option value="$PROJECT_DIR$/alipay/pom.xml" />
-        <option value="$PROJECT_DIR$/wxpay/pom.xml" />
-        <option value="$PROJECT_DIR$/paypal/pom.xml" />
         <option value="$PROJECT_DIR$/supervisor/pom.xml" />
         <option value="$PROJECT_DIR$/consumer/pom.xml" />
         <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/supervisor-show/pom.xml" />
-        <option value="$PROJECT_DIR$/shrek-manage/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -29,8 +24,10 @@
         <option value="$PROJECT_DIR$/oauth2-resource/pom.xml" />
         <option value="$PROJECT_DIR$/service-hi/pom.xml" />
         <option value="$PROJECT_DIR$/service-miya/pom.xml" />
+        <option value="$PROJECT_DIR$/shrek-manage1/pom.xml" />
         <option value="$PROJECT_DIR$/spring-security-sso/pom.xml" />
         <option value="$PROJECT_DIR$/supervisor-show/pom.xml" />
+        <option value="$PROJECT_DIR$/turbine-service/pom.xml" />
       </set>
     </option>
   </component>

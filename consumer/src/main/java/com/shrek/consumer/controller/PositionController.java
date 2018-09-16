@@ -5,7 +5,6 @@ import com.shrek.consumer.entity.PositionExample;
 import com.shrek.consumer.service.PositionService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +25,6 @@ public class PositionController {
 	@ApiOperation(value="统计Position", notes="根据example统计Position")
     @ApiImplicitParam(name = "example", value = "职位查询实体PositionExample", required = true, dataType = "PositionExample")
     @RequestMapping(value="/countByExample", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('position:countByExample')")
 	public long countByExample(@RequestBody PositionExample example) {
 		return positionService.countByExample(example);
 	}
@@ -34,14 +32,12 @@ public class PositionController {
     @ApiOperation(value="选择删除Position", notes="根据example删除Position")
     @ApiImplicitParam(name = "example", value = "职位查询实体PositionExample", required = true, dataType = "PositionExample")
     @RequestMapping(value="/deleteByExample", method=RequestMethod.DELETE)
-	@PreAuthorize("hasAuthority('position:deleteByExample')")
 	public int deleteByExample(@RequestBody PositionExample example) {
 		return positionService.deleteByExample(example);
 	}
 
     @ApiOperation(value="主键删除Position", notes="根据主键id删除Position")
     @RequestMapping(value="/deleteByPrimaryKey", method=RequestMethod.DELETE)
-	@PreAuthorize("hasAuthority('position:deleteByPrimaryKey')")
 	public int deleteByPrimaryKey(@ApiParam("主键id") @RequestParam Integer id) {
 		return positionService.deleteByPrimaryKey(id);
 	}
@@ -49,7 +45,6 @@ public class PositionController {
     @ApiOperation(value="添加Position", notes="利用Position实体进行插入")
     @ApiImplicitParam(name = "record", value = "职位实体Position", required = true, dataType = "Position")
     @RequestMapping(value="/insert", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('position:insert')")
 	public int insert(@RequestBody Position record) {
 		return positionService.insert(record);
 	}
@@ -57,7 +52,6 @@ public class PositionController {
     @ApiOperation(value="选择添加Position", notes="利用Position实体进行参数选择性的插入")
     @ApiImplicitParam(name = "record", value = "职位实体Position", required = true, dataType = "Position")
     @RequestMapping(value="/insertSelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('position:insertSelective')")
 	public int insertSelective(@RequestBody Position record) {
 		return positionService.insertSelective(record);
 	}
@@ -65,14 +59,12 @@ public class PositionController {
     @ApiOperation(value="查询Position", notes="利用PositionExample实体进行查询Position集合")
     @ApiImplicitParam(name = "example", value = "职位实体PositionExample", required = true, dataType = "PositionExample")
     @RequestMapping(value="/selectByExample", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('position:selectByExample')")
 	public List<Position> selectByExample(@RequestBody PositionExample example) {
 		return positionService.selectByExample(example);
 	}
 
     @ApiOperation(value="主键查询Position", notes="根据主键id查询Position")
     @RequestMapping(value="/selectByPrimaryKey", method=RequestMethod.POST)
-	@PreAuthorize("hasAuthority('position:selectByPrimaryKey')")
 	public Position selectByPrimaryKey(@ApiParam("主键id") @RequestParam Integer id) {
 		return positionService.selectByPrimaryKey(id);
 	}
@@ -83,7 +75,6 @@ public class PositionController {
             @ApiImplicitParam(name = "example", value = "职位查询实体", required = true, dataType = "PositionExample")
     })
     @RequestMapping(value="/updateByExampleSelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('position:updateByExampleSelective')")
 	public int updateByExampleSelective(@RequestBody Position record, @RequestBody PositionExample example) {
 		return positionService.updateByExampleSelective(record, example);
 	}
@@ -94,7 +85,6 @@ public class PositionController {
             @ApiImplicitParam(name = "example", value = "职位查询实体", required = true, dataType = "PositionExample")
     })
     @RequestMapping(value="/updateByExample", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('position:updateByExample')")
 	public int updateByExample(@RequestBody Position record, @RequestBody PositionExample example) {
 		return positionService.updateByExample(record, example);
 	}
@@ -102,7 +92,6 @@ public class PositionController {
     @ApiOperation(value="更新Position", notes="根据Position实体进行选择性的参数更新")
     @ApiImplicitParam(name = "record", value = "职位实体Position", required = true, dataType = "Position")
     @RequestMapping(value="/updateByPrimaryKeySelective", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('position:updateByPrimaryKeySelective')")
 	public int updateByPrimaryKeySelective(@RequestBody Position record) {
 		return positionService.updateByPrimaryKeySelective(record);
 	}
@@ -110,7 +99,6 @@ public class PositionController {
     @ApiOperation(value="更新Position", notes="根据Position实体进行更新")
     @ApiImplicitParam(name = "record", value = "职位实体Position", required = true, dataType = "Position")
     @RequestMapping(value="/updateByPrimaryKey", method=RequestMethod.PUT)
-	@PreAuthorize("hasAuthority('position:updateByPrimaryKey')")
 	public int updateByPrimaryKey(@RequestBody Position record) {
 		return positionService.updateByPrimaryKey(record);
 	}

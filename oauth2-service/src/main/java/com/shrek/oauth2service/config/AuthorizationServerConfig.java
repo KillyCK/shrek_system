@@ -1,14 +1,13 @@
 package com.shrek.oauth2service.config;
 
-import com.shrek.oauth2service.security.BataApprovalHandler;
 import com.shrek.oauth2service.security.MyClientDetailsService;
 import com.shrek.oauth2service.security.MyRedisTokenStore;
 import com.shrek.oauth2service.security.RedisAuthenticationCodeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -17,19 +16,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
-import org.springframework.security.oauth2.provider.approval.ApprovalStore;
-import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
-import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
-import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
-import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint;
-import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
-import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
-import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
 import javax.annotation.PostConstruct;
 
@@ -51,14 +41,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private AuthorizationEndpoint authorizationEndpoint;
     @Autowired
     UserDetailsService userDetailsService;
+    @Autowired
+    private WebResponseExceptionTranslator webResponseExceptionTranslator;
 
     /**
      * 初始化授权页面
      */
     @PostConstruct
     public void init() {
-        authorizationEndpoint.setUserApprovalPage("forward:/oauth2/shrek_approval_page");
-        authorizationEndpoint.setErrorPage("forward:/oauth2/shrek_error_page");
+        authorizationEndpoint.setUserApprovalPage("forward:/templates/shrek_approval_page");
+        authorizationEndpoint.setErrorPage("forward:/templates/shrek_error_page");
     }
 
     /**
@@ -89,16 +81,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new MyClientDetailsService();
     }
 
-    @Bean
-    public OAuth2AccessDeniedHandler oauth2AccessDeniedHandler() {
-        return new OAuth2AccessDeniedHandler();
-    }
 
-    @Bean
-    public OAuth2AuthenticationEntryPoint oauth2AuthenticationEntryPoint() {
-        return new OAuth2AuthenticationEntryPoint();
-    }
-    @Bean
+/*    @Bean
     public ApprovalStore approvalStore() {
         TokenApprovalStore store = new TokenApprovalStore();
         store.setTokenStore(tokenStore());
@@ -113,10 +97,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public UserApprovalHandler userApprovalHandler() {
         return new BataApprovalHandler(clientDetailsService(),approvalStore(),oAuth2RequestFactory());
-    }
+    }*/
 
-
-    @Bean
+/*    @Bean
     @Autowired
     public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore){
         TokenStoreUserApprovalHandler handler = new TokenStoreUserApprovalHandler();
@@ -132,20 +115,36 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         TokenApprovalStore store = new TokenApprovalStore();
         store.setTokenStore(tokenStore);
         return store;
+    }*/
+    /**
+     * <p>注意，自定义TokenServices的时候，需要设置@Primary，否则报错，</p>
+     * @return
+     */
+    @Primary
+    @Bean
+    public DefaultTokenServices defaultTokenServices(){
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenStore(tokenStore());
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setClientDetailsService(clientDetailsService());
+        tokenServices.setAccessTokenValiditySeconds(60*60*12); // token有效期自定义设置，默认12小时
+        tokenServices.setRefreshTokenValiditySeconds(60 * 60 * 24 * 7);//默认30天，这里修改
+        return tokenServices;
     }
 
     //配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 
-        endpoints.tokenStore(tokenStore())
+        endpoints
+                .userDetailsService(userDetailsService)
+                //.userApprovalHandler(userApprovalHandler())
+               // .approvalStore(approvalStore())
                 .authorizationCodeServices(authorizationCodeServices())
                 .authenticationManager(authenticationManager)
-                .userApprovalHandler(userApprovalHandler())
-                .userDetailsService(userDetailsService)  //refresh_token的时候需要
-                .approvalStore(approvalStore());
-               // .pathMapping("/oauth/confirm_access", "/oauth/confirm_access")
-               // .tokenServices(tokenServices);
+                .tokenStore(tokenStore())
+                .tokenServices(defaultTokenServices())
+                .exceptionTranslator(webResponseExceptionTranslator);
 
     }
 
@@ -153,28 +152,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 
-        security
+        security.tokenKeyAccess("permitAll()");
+        security .checkTokenAccess("isAuthenticated()");
+        security.allowFormAuthenticationForClients();
+
+/*       security
                 .authenticationEntryPoint(oauth2AuthenticationEntryPoint())
                 .accessDeniedHandler(oauth2AccessDeniedHandler())
                 .checkTokenAccess("isAuthenticated()") // 开启/oauth/check_token验证端口认证权限访问
                 .allowFormAuthenticationForClients()
                 // 开启/oauth/token_key验证端口无权限访问
-                .tokenKeyAccess("permitAll()");
+                .tokenKeyAccess("permitAll()");*/
 
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
-/*        clients.inMemory()
-                .withClient("curl-client")//客户端ID
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit","client_credentials")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .scopes("read", "write", "trust")//授权用户的操作权限
-                .redirectUris("http://www.baidu.com")
-                .secret("curl-secret");//密码*/
-               // .accessTokenValiditySeconds(3600).//token有效期为3600秒
-               // refreshTokenValiditySeconds(86400);//刷新token有效期为600秒
 
         clients.withClientDetails(clientDetailsService());
 
